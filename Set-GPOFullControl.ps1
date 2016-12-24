@@ -75,7 +75,7 @@ if(($OUName.Count -gt 0) -and ($DistinguishedName.Count -gt 0)){
 Write-Verbose "Collecting list of group policies"
 $GroupPoliciesToModify = @()
 if($All){
-    Write-Verbose "-All Switch Used - Searching Entire Domain via $server"
+    Write-Verbose "-All Switch Used - Searching Entire Domain"
     $searcher = New-Object DirectoryServices.DirectorySearcher ##Create New Searcher
     $searcher.Filter = '(objectCategory=groupPolicyContainer)' ##Set the filter to group policies
     $searcher.SearchRoot = "LDAP://$domain"                    ##Search the whole domain baby.
