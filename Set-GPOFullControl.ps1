@@ -2,7 +2,7 @@
 ## Existing GPO Full Control Fix for AGPM ##
 ## Written By: Nathan Ziehnert            ##
 ## Website: http://z-nerd.com/            ##
-## Version: 0.1 (Untested)                ##
+## Version: 1.0                           ##
 ############################################
 <#
 .SYNOPSIS
