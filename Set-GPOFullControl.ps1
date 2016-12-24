@@ -1,9 +1,9 @@
-﻿#########################################
-## Existing GPO Ownership Fix for AGPM ##
-## Written By: Nathan Ziehnert         ##
-## Website: http://z-nerd.com/         ##
-## Version: 0.1 (Untested)             ##
-#########################################
+﻿############################################
+## Existing GPO Full Control Fix for AGPM ##
+## Written By: Nathan Ziehnert            ##
+## Website: http://z-nerd.com/            ##
+## Version: 0.1 (Untested)                ##
+############################################
 <#
 .SYNOPSIS
     This script assigns ownership privileges to the specified
@@ -40,7 +40,7 @@
     A switch to keep the script from actually performing any changes to AD and Group Policy. Use in conjunction with the -Verbose switch to see what the script would have done.
 
 .NOTES
-    File Name: Set-GPOOwnership.ps1
+    File Name: Set-GPOFullControl.ps1
     Author: Nathan Ziehnert
 
 .LINK
