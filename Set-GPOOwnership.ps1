@@ -6,8 +6,8 @@
 #########################################
 <#
 .SYNOPSIS
-    THis script assigns ownership privileges to all GPOs in the
-    domain to the provided AD account or group.
+    This script assigns ownership privileges to the specified
+    GPOs in the domain to the provided AD account or group.
 
 .DESCRIPTION
     When creating the AGPM Service Accoount with least privilege, 
