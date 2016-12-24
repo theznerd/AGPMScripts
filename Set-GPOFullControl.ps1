@@ -1,4 +1,4 @@
-﻿############################################
+############################################
 ## Existing GPO Full Control Fix for AGPM ##
 ## Written By: Nathan Ziehnert            ##
 ## Website: http://z-nerd.com/            ##
@@ -6,8 +6,8 @@
 ############################################
 <#
 .SYNOPSIS
-    This script assigns ownership privileges to the specified
-    GPOs in the domain to the provided AD account or group.
+    This script assigns full control privileges to the specified
+    GPOs in the domain to the specified AD account or group.
 
 .DESCRIPTION
     When creating the AGPM Service Accoount with least privilege, 
