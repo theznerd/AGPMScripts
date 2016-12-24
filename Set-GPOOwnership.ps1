@@ -34,7 +34,7 @@
     Either a single DN for an OU, or an array of DNs for OUs. This would be necessary if you have OUs with the same name and you want to manage one (or more) of them.
 
 .PARAMETER FullControlAccount [string]
-    A single samAccountName for either the user or group that will  of the group policy.
+    A single samAccountName for either the user or group that will have FullControl rights over the modified group policies.
 
 .PARAMETER WhatIf
     A switch to keep the script from actually performing any changes to AD and Group Policy. Use in conjunction with the -Verbose switch to see what the script would have done.
