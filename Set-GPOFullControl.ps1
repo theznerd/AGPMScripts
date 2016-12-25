@@ -12,14 +12,14 @@
 .DESCRIPTION
     When creating the AGPM Service Accoount with least privilege, 
     you will notice that importing existing policies doesn't work.
-    This is because you have to delegate ownership privileges to
+    This is because you have to delegate full control privileges to
     the AGPM Service account (or to a group that the service 
-    account belongs to.
+    account belongs to). If you don't you'll get access denied errors.
 
     This script is designed to take care of that programmatically
     so that you don't have to do the work manually. The script
     can target specific OUs (passed as a single OU or an array of
-    OUs).
+    OUs - by name or by DN).
 
 .PARAMETER Verbose
     This script is verbose enabled. Use this switch to get verbose output.
