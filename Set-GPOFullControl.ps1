@@ -2,7 +2,7 @@
 ## Existing GPO Full Control Fix for AGPM ##
 ## Written By: Nathan Ziehnert            ##
 ## Website: http://z-nerd.com/            ##
-## Version: 1.0                           ##
+## Version: 1.1                           ##
 ############################################
 <#
 .SYNOPSIS
@@ -75,7 +75,7 @@ if(($OUName.Count -gt 0) -and ($DistinguishedName.Count -gt 0)){
 Write-Verbose "Collecting list of group policies"
 $GroupPoliciesToModify = @()
 if($All){
-    Write-Verbose "-All Switch Used - Searching Entire Domain"
+    Write-Verbose "-All Switch Used - Searching Entire Domain via $server"
     $searcher = New-Object DirectoryServices.DirectorySearcher ##Create New Searcher
     $searcher.Filter = '(objectCategory=groupPolicyContainer)' ##Set the filter to group policies
     $searcher.SearchRoot = "LDAP://$domain"                    ##Search the whole domain baby.
@@ -122,13 +122,14 @@ Write-Verbose "Finished building list of GPOs"
 
 Write-Verbose "Build new access control entry"
 $CMNTAccount = new-object System.Security.Principal.NTAccount("$FullControlAccount") ##This should work... get an NT account by name...
-$ActiveDirectoryRights = "GenericAll" ##FullControl
+$ActiveDirectoryRights = "CreateChild, DeleteChild, Self, WriteProperty, DeleteTree, Delete, GenericRead, WriteDacl, WriteOwner" ##FullControl
 $AccessControlType = "Allow" ##Instead of Deny, duh.
-$Inherit = "SelfAndChildren" ##Probably not necessary, but I think required for the ActiveDirectoryAccessRule
+$Inherit = "Self" ##Probably not necessary, but I think required for the ActiveDirectoryAccessRule
 $nullGUID = [guid]'00000000-0000-0000-0000-000000000000' ##Again, kinda stupid, but necessary for ActiveDirectoryAccessRule
 ##Time to make the new ACE object.
 $newACE = New-Object System.DirectoryServices.ActiveDirectoryAccessRule $CMNTAccount, $ActiveDirectoryRights, $AccessControlType, $Inherit, $nullGUID
 
+##Modify privileges on the GPOs to allow AGPM to Manage
 Write-Verbose "Begin to add new ACE to GPOs"
 foreach($GPO in $GroupPoliciesToModify){
     if($WhatIf){
@@ -139,4 +140,21 @@ foreach($GPO in $GroupPoliciesToModify){
         $GPO.psbase.commitchanges() ##Save Changes...
     }
 }
+Write-Verbose "Finish adding ACE to GPOs"
+
+##Modify SYSVOL permissions (on GPO objects) so that error does not prompt when looking at GPOs in GPMC
+Write-Verbose "Begin modification of SYSVOL permissions"
+$newFileACE = New-Object System.Security.AccessControl.FileSystemAccessRule($CMNTAccount, "FullControl", "ContainerInherit, ObjectInherit", "None", "Allow")
+foreach($GPO in $GroupPoliciesToModify){
+    if($WhatIf){
+        Write-Verbose "WHAT IF: Fix ACE on $($GPO.gPCFileSysPath)"
+    }else{
+        Write-Verbose "Fix ACE on $($GPO.gPCFileSysPath)"
+        $curACL = Get-Acl "$($GPO.gPCFileSysPath)"
+        $curACL.SetAccessRuleProtection($True, $false)
+        $curACL.SetAccessRule($newFileACE)
+        Set-Acl "$($GPO.gPCFileSysPath)" $curACL
+    }
+}
+Write-Verbose "Finished modifying SYSVOL permissions"
 Write-Verbose "Script Complete."
