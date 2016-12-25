@@ -150,10 +150,10 @@ foreach($GPO in $GroupPoliciesToModify){
         Write-Verbose "WHAT IF: Fix ACE on $($GPO.gPCFileSysPath)"
     }else{
         Write-Verbose "Fix ACE on $($GPO.gPCFileSysPath)"
-        $curACL = Get-Acl "$($GPO.gPCFileSysPath)"
-        $curACL.SetAccessRuleProtection($True, $false)
-        $curACL.SetAccessRule($newFileACE)
-        Set-Acl "$($GPO.gPCFileSysPath)" $curACL
+        $curACL = Get-Acl "$($GPO.gPCFileSysPath)"     ##Load the current ACL
+        $curACL.SetAccessRuleProtection($True, $false) ##Protect from inheritance, don't preserve inheritance
+        $curACL.SetAccessRule($newFileACE)             ##Set that ACE SON!
+        Set-Acl "$($GPO.gPCFileSysPath)" $curACL       ##Just kidding, set it here...
     }
 }
 Write-Verbose "Finished modifying SYSVOL permissions"
