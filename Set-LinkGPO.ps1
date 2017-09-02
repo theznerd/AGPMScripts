@@ -56,9 +56,11 @@ if($WhatIf){
     Write-Verbose "WHAT IF: Adding new SDDL to ACL"
 }else{
     $objsecurity.SetSecurityDescriptorSddlForm($objsecurity.sddl+$newsddl) #add new SDDL
+    Write-Verbose "Adding new SDDL to ACL"
 }
 if($WhatIf){
     Write-Verbose "WHAT IF: Setting new ACL"
 }else{
     Set-Acl -Path "ad:\$($domaindn)" -AclObject $objsecurity #set new ACL
+    Write-Verbose "Setting new ACL"
 }
