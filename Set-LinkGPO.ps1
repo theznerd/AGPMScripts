@@ -17,7 +17,7 @@
 .PARAMETER Verbose
     This script is verbose enabled. Use this switch to get verbose output.
 .PARAMETER MSAccount [string]
-    A single string for the name of the MSA (ex "LAB\MSA.AGPM$")
+    A single string for the name of the MSA (ex "MSA.AGPM$")
 .PARAMETER WhatIf
     A switch to keep the script from actually performing any changes to AD and Group Policy. Use in conjunction with the -Verbose switch to see what the script would have done.
 .NOTES
