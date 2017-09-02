@@ -1,9 +1,9 @@
-############################################
-## Existing GPO Full Control Fix for AGPM ##
-## Written By: Nathan Ziehnert            ##
-## Website: http://z-nerd.com/            ##
-## Version: 1.1                           ##
-############################################
+########################################################################
+## Link GPO Permissions for AGPM MSA                                  ##
+## Written By: Craig Forster (appended by: Nathan Ziehnert            ##
+## Website: http://z-nerd.com/                                        ##
+## Version: 1.0                                                       ##
+########################################################################
 <#
 .SYNOPSIS
     This script assigns Link GPO permissions to the specified
