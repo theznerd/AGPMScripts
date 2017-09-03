@@ -45,7 +45,11 @@ Write-Verbose "MSA is: $agpmserviceaccountname"
 $domaindn = (Get-ADDomain).distinguishedname #get domain distinguished name
 Write-Verbose "Domain DN is: $domaindn"
 
-$agpmaccountsid = (get-adserviceaccount $($agpmserviceaccountname)).sid #get SID of AGPM MSA account
+try{
+    $agpmaccountsid = (get-adserviceaccount $($agpmserviceaccountname)).sid #get SID of AGPM MSA account
+}catch{
+    $agpmaccountsid = (get-adaccount $($agpmserviceaccountname)).sid #get SID of AGPM MSA account
+}
 Write-Verbose "MSA SID is: $agpmaccountsid"
 
 $newsddl = "(OA;CI;RPWP;f30e3bbe-9ff0-11d1-b603-0000f80367c1;;$($agpmaccountsid))" #set SDDL perms
